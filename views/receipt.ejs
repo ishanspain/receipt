@@ -158,7 +158,7 @@
   const totalTaxValue = value(receiptTaxAmount, sumRows(lineTax));
   const totalPayableAmount = value(grandTotal, sumRows(lineTotal));
   const paymentModeText = value(payment.mode, value(typeof paymentMode !== "undefined" ? paymentMode : undefined, ""));
-  const brandName = value(sellerData.brandName, value(sellerData.name, "PrintCampus"));
+  const brandName = value(sellerData.brandName, value(sellerData.name, "Print Campus"));
   const brandLogoSrc = value(sellerData.logoDataUri, value(typeof logoDataUri !== "undefined" ? logoDataUri : undefined, ""));
   const qrCodeSrc = value(typeof qrCodeDataUrl !== "undefined" ? qrCodeDataUrl : undefined, value(typeof qrCodeDataUri !== "undefined" ? qrCodeDataUri : undefined, ""));
   const sellerWebsite = value(sellerData.website, "www.printcampus.in");
@@ -384,7 +384,7 @@
     <div class="party">
       <div class="section-title">Sold By (Seller):</div>
       <p>
-        <strong><%= value(sellerData.legalName, value(sellerData.name, "PrintCampus Solutions Private Limited")) %></strong>
+        <strong><%= value(sellerData.legalName, value(sellerData.name, "Print Campus Solutions Private Limited")) %></strong>
         <%= value(sellerData.address, "") %><% if (sellerData.address) { %><br><% } %>
         <%= value(sellerData.city, "") %><% if (sellerData.city) { %><br><% } %>
         <% if (sellerData.gstin) { %>GSTIN: <%= sellerData.gstin %><% } %>

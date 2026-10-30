@@ -39,10 +39,10 @@ const data = {
   currency: "₹",
   qrCodeDataUrl,
   sellerInfo: {
-    brandName: "PrintCampus",
+    brandName: "Print Campus",
     logoDataUri: printCampusLogoDataUri,
     tagline: "Online Document Printing & Stationery Services",
-    legalName: "PrintCampus Solutions Private Limited",
+    legalName: "Print Campus Solutions Private Limited",
     address: "123 Campus Plaza, Sector 62",
     city: "Noida, Uttar Pradesh - 201301",
     gstin: "09AAAACCP1234A1Z5",
