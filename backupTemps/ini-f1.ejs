@@ -3,10 +3,10 @@
     input !== undefined && input !== null && input !== "" ? input : fallback;
 
   const currencySymbol = value(typeof currency !== "undefined" ? currency : undefined, "Rs. ");
-  const invoiceId = value(typeof invoiceNumber !== "undefined" ? invoiceNumber : undefined);
-  const invoiceDate = value(typeof issueDate !== "undefined" ? issueDate : undefined, value(typeof date !== "undefined" ? date : undefined));
-  const orderNumberText = value(typeof orderNumber !== "undefined" ? orderNumber : undefined, value(typeof orderId !== "undefined" ? orderId : undefined, value(invoiceId, "PC1207260001")));
-  const orderPlacedDate = value(typeof orderDate !== "undefined" ? orderDate : undefined, value(typeof placedAt !== "undefined" ? placedAt : undefined, value(invoiceDate, "12/7/2026")));
+  const receiptId = value(typeof receiptNumber !== "undefined" ? receiptNumber : undefined);
+  const receiptDate = value(typeof issueDate !== "undefined" ? issueDate : undefined, value(typeof date !== "undefined" ? date : undefined));
+  const orderNumberText = value(typeof orderNumber !== "undefined" ? orderNumber : undefined, value(typeof orderId !== "undefined" ? orderId : undefined, value(receiptId, "PC1207260001")));
+  const orderPlacedDate = value(typeof orderDate !== "undefined" ? orderDate : undefined, value(typeof placedAt !== "undefined" ? placedAt : undefined, value(receiptDate, "12/7/2026")));
   const payment = typeof paymentInfo !== "undefined" ? paymentInfo : {};
   const sellerData = typeof sellerInfo !== "undefined"
     ? sellerInfo
@@ -88,16 +88,16 @@
   };
 
   const itemSubtotal = value(totalsData.itemSubtotal, value(typeof subtotal !== "undefined" ? subtotal : undefined, 0));
-  const invoiceAddonsSubtotal = value(totalsData.addonsSubtotal, typeof addonsSubtotal !== "undefined" ? addonsSubtotal : 0);
-  const invoiceDeliveryFee = value(totalsData.deliveryFee, typeof deliveryFee !== "undefined" ? deliveryFee : 0);
-  const invoicePlatformFee = value(totalsData.platformFee, typeof platformFee !== "undefined" ? platformFee : 0);
-  const invoiceDiscount = value(totalsData.discount, value(totalsData.discountAmount, typeof discount !== "undefined" ? discount : 0));
-  const invoiceTaxAmount = value(totalsData.taxAmount, typeof taxAmount !== "undefined" ? taxAmount : 0);
+  const receiptAddonsSubtotal = value(totalsData.addonsSubtotal, typeof addonsSubtotal !== "undefined" ? addonsSubtotal : 0);
+  const receiptDeliveryFee = value(totalsData.deliveryFee, typeof deliveryFee !== "undefined" ? deliveryFee : 0);
+  const receiptPlatformFee = value(totalsData.platformFee, typeof platformFee !== "undefined" ? platformFee : 0);
+  const receiptDiscount = value(totalsData.discount, value(totalsData.discountAmount, typeof discount !== "undefined" ? discount : 0));
+  const receiptTaxAmount = value(totalsData.taxAmount, typeof taxAmount !== "undefined" ? taxAmount : 0);
   const grandTotal = value(totalsData.grandTotal, value(typeof total !== "undefined" ? total : undefined, 0));
   const totalUnitAmount = value(itemSubtotal, sumRows((item) => numeric(lineUnit(item)) * lineQty(item)));
   const totalQuantity = value(totalsData.quantity, value(totalsData.qty, sumRows(lineQty)));
-  const totalDiscountAmount = value(invoiceDiscount, sumRows(lineDiscount));
-  const totalTaxValue = value(invoiceTaxAmount, sumRows(lineTax));
+  const totalDiscountAmount = value(receiptDiscount, sumRows(lineDiscount));
+  const totalTaxValue = value(receiptTaxAmount, sumRows(lineTax));
   const totalPayableAmount = value(grandTotal, sumRows(lineTotal));
   const paymentModeText = value(payment.mode, value(typeof paymentMode !== "undefined" ? paymentMode : undefined, ""));
   const brandName = value(sellerData.brandName, value(sellerData.name, "PrintCampus"));
@@ -109,7 +109,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Invoice <%= invoiceId %></title>
+<title>Receipt <%= receiptId %></title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -135,15 +135,15 @@
     height: 150px;
     object-fit: contain;
   }
-  .brand p, .invoice-meta p, .party p, .payment p {
+  .brand p, .receipt-meta p, .party p, .payment p {
     color: #475569;
     line-height: 1.45;
   }
-  .invoice-meta {
+  .receipt-meta {
     text-align: right;
     min-width: 230px;
   }
-  .invoice-meta h2 {
+  .receipt-meta h2 {
     color: #0f172a;
     font-size: 18px;
     letter-spacing: 0.08em;
@@ -216,26 +216,26 @@
   .total-row .payment-mode {
     text-align: left;
   }
-  .invoice-bottom {
+  .receipt-bottom {
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
     gap: 32px;
     margin-top: 26px;
   }
-  .invoice-qr {
+  .receipt-qr {
     width: 150px;
   }
-  .invoice-qr img {
+  .receipt-qr img {
     display: block;
     margin-bottom: 12px;
   }
-  .invoice-qr-code {
+  .receipt-qr-code {
     width: 130px;
     height: 130px;
     object-fit: contain;
   }
-  .invoice-signature {
+  .receipt-signature {
     width: 130px;
     height: 58px;
     object-fit: contain;
@@ -277,11 +277,11 @@
         <strong><%= brandName %></strong>
       <% } %>
     </div>
-    <div class="invoice-meta">
-      <h2>TAX INVOICE</h2>
+    <div class="receipt-meta">
+      <h2>TAX RECEIPT</h2>
       <p>
-        <strong>Invoice Number:</strong> <%= invoiceId %><br>
-        <strong>Invoice Date:</strong> <%= invoiceDate %><br>
+        <strong>Receipt Number:</strong> <%= receiptId %><br>
+        <strong>Receipt Date:</strong> <%= receiptDate %><br>
         <strong>Order Number:</strong> <%= orderNumberText %><br>
         <strong>Order Date:</strong> <%= orderPlacedDate %>
       </p>
@@ -351,7 +351,7 @@
         <% }); %>
       <% } else { %>
         <tr>
-          <td colspan="7">No invoice items available.</td>
+          <td colspan="7">No receipt items available.</td>
         </tr>
       <% } %>
       <tr class="total-row">
@@ -366,12 +366,12 @@
     </tbody>
   </table>
 
-  <section class="invoice-bottom">
+  <section class="receipt-bottom">
     <% if (qrCodeSrc) { %>
-      <div class="invoice-qr">
-        <img class="invoice-qr-code" src="<%= qrCodeSrc %>" alt="Invoice verification QR code">
+      <div class="receipt-qr">
+        <img class="receipt-qr-code" src="<%= qrCodeSrc %>" alt="Receipt verification QR code">
         <% if (signatureSrc) { %>
-          <img class="invoice-signature" src="<%= signatureSrc %>" alt="Authorized signature">
+          <img class="receipt-signature" src="<%= signatureSrc %>" alt="Authorized signature">
         <% } %>
       </div>
     <% } %>

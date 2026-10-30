@@ -1,3 +1,1 @@
-# this is a invoice template project
-
-## see @architecture.md for server design
+# this is a receipt template project

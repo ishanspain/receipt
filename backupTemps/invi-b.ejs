@@ -3,9 +3,9 @@
     input !== undefined && input !== null && input !== "" ? input : fallback;
 
   const currencySymbol = value(typeof currency !== "undefined" ? currency : undefined, "Rs. ");
-  const invoiceId = value(typeof invoiceNumber !== "undefined" ? invoiceNumber : undefined);
-  const invoiceDate = value(typeof issueDate !== "undefined" ? issueDate : undefined, value(typeof date !== "undefined" ? date : undefined));
-  const invoiceStatus = value(typeof orderStatus !== "undefined" ? orderStatus : undefined, value(typeof status !== "undefined" ? status : undefined, "RECEIVED"));
+  const receiptId = value(typeof receiptNumber !== "undefined" ? receiptNumber : undefined);
+  const receiptDate = value(typeof issueDate !== "undefined" ? issueDate : undefined, value(typeof date !== "undefined" ? date : undefined));
+  const receiptStatus = value(typeof orderStatus !== "undefined" ? orderStatus : undefined, value(typeof status !== "undefined" ? status : undefined, "RECEIVED"));
   const payment = typeof paymentInfo !== "undefined" ? paymentInfo : {};
   const sellerData = typeof sellerInfo !== "undefined"
     ? sellerInfo
@@ -82,11 +82,11 @@
   };
 
   const itemSubtotal = value(totalsData.itemSubtotal, value(typeof subtotal !== "undefined" ? subtotal : undefined, 0));
-  const invoiceAddonsSubtotal = value(totalsData.addonsSubtotal, typeof addonsSubtotal !== "undefined" ? addonsSubtotal : 0);
-  const invoiceDeliveryFee = value(totalsData.deliveryFee, typeof deliveryFee !== "undefined" ? deliveryFee : 0);
-  const invoicePlatformFee = value(totalsData.platformFee, typeof platformFee !== "undefined" ? platformFee : 0);
-  const invoiceDiscount = value(totalsData.discount, value(totalsData.discountAmount, typeof discount !== "undefined" ? discount : 0));
-  const invoiceTaxAmount = value(totalsData.taxAmount, typeof taxAmount !== "undefined" ? taxAmount : 0);
+  const receiptAddonsSubtotal = value(totalsData.addonsSubtotal, typeof addonsSubtotal !== "undefined" ? addonsSubtotal : 0);
+  const receiptDeliveryFee = value(totalsData.deliveryFee, typeof deliveryFee !== "undefined" ? deliveryFee : 0);
+  const receiptPlatformFee = value(totalsData.platformFee, typeof platformFee !== "undefined" ? platformFee : 0);
+  const receiptDiscount = value(totalsData.discount, value(totalsData.discountAmount, typeof discount !== "undefined" ? discount : 0));
+  const receiptTaxAmount = value(totalsData.taxAmount, typeof taxAmount !== "undefined" ? taxAmount : 0);
   const grandTotal = value(totalsData.grandTotal, value(typeof total !== "undefined" ? total : undefined, 0));
   const brandName = value(sellerData.brandName, value(sellerData.name, "PrintCampus"));
   const brandLogoSrc = value(sellerData.logoDataUri, value(typeof logoDataUri !== "undefined" ? logoDataUri : undefined, ""));
@@ -95,7 +95,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Invoice <%= invoiceId %></title>
+<title>Receipt <%= receiptId %></title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -121,15 +121,15 @@
     height: 150px;
     object-fit: contain;
   }
-  .brand p, .invoice-meta p, .party p, .payment p {
+  .brand p, .receipt-meta p, .party p, .payment p {
     color: #475569;
     line-height: 1.45;
   }
-  .invoice-meta {
+  .receipt-meta {
     text-align: right;
     min-width: 230px;
   }
-  .invoice-meta h2 {
+  .receipt-meta h2 {
     color: #0f172a;
     font-size: 18px;
     letter-spacing: 0.08em;
@@ -254,14 +254,14 @@
         <strong><%= brandName %></strong>
       <% } %>
     </div>
-    <div class="invoice-meta">
-      <h2>TAX INVOICE</h2>
+    <div class="receipt-meta">
+      <h2>TAX RECEIPT</h2>
       <p>
-        Invoice No: <%= invoiceId %><br>
-        Date: <%= invoiceDate %><br>
-        Order Status: <%= invoiceStatus %>
+        Receipt No: <%= receiptId %><br>
+        Date: <%= receiptDate %><br>
+        Order Status: <%= receiptStatus %>
       </p>
-      <span class="status"><%= invoiceStatus %></span>
+      <span class="status"><%= receiptStatus %></span>
     </div>
   </header>
 
@@ -328,7 +328,7 @@
         <% }); %>
       <% } else { %>
         <tr>
-          <td colspan="7">No invoice items available.</td>
+          <td colspan="7">No receipt items available.</td>
         </tr>
       <% } %>
     </tbody>
@@ -336,11 +336,11 @@
 
   <section class="summary">
     <div class="summary-row"><span>Item Subtotal:</span><span><%= amount(itemSubtotal) %></span></div>
-    <div class="summary-row"><span>Add-ons Subtotal:</span><span><%= amount(invoiceAddonsSubtotal) %></span></div>
-    <div class="summary-row"><span>Delivery Fee:</span><span><%= amount(invoiceDeliveryFee) %></span></div>
-    <div class="summary-row"><span>Platform Fee:</span><span><%= amount(invoicePlatformFee) %></span></div>
-    <div class="summary-row"><span>Discount:</span><span>-<%= amount(invoiceDiscount) %></span></div>
-    <div class="summary-row"><span>Tax (GST):</span><span><%= amount(invoiceTaxAmount) %></span></div>
+    <div class="summary-row"><span>Add-ons Subtotal:</span><span><%= amount(receiptAddonsSubtotal) %></span></div>
+    <div class="summary-row"><span>Delivery Fee:</span><span><%= amount(receiptDeliveryFee) %></span></div>
+    <div class="summary-row"><span>Platform Fee:</span><span><%= amount(receiptPlatformFee) %></span></div>
+    <div class="summary-row"><span>Discount:</span><span>-<%= amount(receiptDiscount) %></span></div>
+    <div class="summary-row"><span>Tax (GST):</span><span><%= amount(receiptTaxAmount) %></span></div>
     <div class="summary-row summary-total"><span>Grand Total:</span><span><%= money(grandTotal) %></span></div>
   </section>
 
@@ -351,7 +351,7 @@
       Website: <%= value(sellerData.website, "www.printcampus.com") %>
     </div>
     <div>
-      <span>This is a computer-generated tax invoice and requires no physical signature.</span>
+      <span>This is a computer-generated tax receipt and requires no physical signature.</span>
       <span class="page">Page 1 of 1</span>
     </div>
   </footer>

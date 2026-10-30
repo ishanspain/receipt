@@ -35,7 +35,7 @@ app.engine("tsx", reactViewEngine);
 app.engine("cjs", reactViewEngine);
 
 const data = {
-  invoiceNumber: "INV-PC1207260001",
+  receiptNumber: "REC-PC1207260001",
   issueDate: "12/7/2026",
   orderNumber: "PC1207260001",
   orderDate: "12/7/2026",
@@ -85,7 +85,7 @@ const data = {
       total: 719.8,
     },
     {
-      title: "Print: Invoice_PC0107260010_(2).pdf",
+      title: "Print: Receipt_PC0107260010_(2).pdf",
       service: "Thesis Binding",
       size: "A4 | COLOR | SINGLE",
       addons: "Color (+Rs. 10.00), A4 (+Rs. 0.00), Single Sided (+Rs. 0.00)",
@@ -96,7 +96,7 @@ const data = {
       total: 1427.8,
     },
     {
-      title: "Print: Invoice_PC0107260010_(1).pdf",
+      title: "Print: Receipt_PC0107260010_(1).pdf",
       service: "Thesis Binding",
       size: "A4 | COLOR | SINGLE",
       addons: "Color (+Rs. 5.00), A4 (+Rs. 0.00), Single Sided (+Rs. 0.00)",
@@ -107,7 +107,7 @@ const data = {
       total: 713.9,
     },
     {
-      title: "Print: Invoice_PC0107260010.pdf",
+      title: "Print: Receipt_PC0107260010.pdf",
       service: "Thesis Binding",
       size: "A4 | COLOR | SINGLE",
       addons: "Color (+Rs. 10.00), A4 (+Rs. 0.00), Single Sided (+Rs. 0.00)",
@@ -118,7 +118,7 @@ const data = {
       total: 1427.8,
     },
     {
-      title: "Print: Invoice_PC0107260010.pdf",
+      title: "Print: Receipt_PC0107260010.pdf",
       service: "Digital Printing",
       size: "A4 | BW | SINGLE",
       unitPrice: 10,
@@ -140,39 +140,39 @@ const data = {
 };
 
 app.get("/", (req, res) => {
-  return res.render("invoice", data);
+  return res.render("receipt", data);
 });
 
-/* app.get("/verify/:invoiceId", (req, res) => {
+/* app.get("/verify/:receiptId", (req, res) => {
   console.log("Verification path:", req.path);
-  const invoiceID = req.params.invoiceId;
-  console.log("Invoice ID:", invoiceID);
+  const receiptID = req.params.receiptId;
+  console.log("Receipt ID:", receiptID);
   console.log("Verification query:", req.query);
   const sig = req.query.sig;
   console.log("Signature:", sig);
 
-  if (typeof invoiceID !== "string" || typeof sig !== "string") {
+  if (typeof receiptID !== "string" || typeof sig !== "string") {
     return res.status(400).render(`invalid-verification.${viewExt}`, {
       title: "Invalid verification link",
       message:
-        "This verification link is incomplete or incorrectly formatted. Please scan the QR code on the invoice again.",
-      invoiceId: typeof invoiceID === "string" ? invoiceID : undefined,
+        "This verification link is incomplete or incorrectly formatted. Please scan the QR code on the receipt again.",
+      receiptId: typeof receiptID === "string" ? receiptID : undefined,
     });
   }
 
-  const isSignvalid = verifySignature(sig, invoiceID);
+  const isSignvalid = verifySignature(sig, receiptID);
   console.log("sig state", isSignvalid);
 
   if (!isSignvalid) {
     return res.status(400).render(`invalid-verification.${viewExt}`, {
-      title: "Invoice verification failed",
+      title: "Receipt verification failed",
       message:
-        "This invoice ID or its verification signature has been tampered with or modified. Do not rely on this invoice until its authenticity is confirmed.",
-      invoiceId: invoiceID,
+        "This receipt ID or its verification signature has been tampered with or modified. Do not rely on this receipt until its authenticity is confirmed.",
+      receiptId: receiptID,
     });
   }
 
-  return res.render("invoice", data);
+  return res.render("receipt", data);
 }); */
 
 app.get("/verify", (req, res) => {
@@ -184,7 +184,7 @@ app.get("/verify", (req, res) => {
     return res.status(400).render(`invalid-verification.${viewExt}`, {
       title: "Invalid verification link",
       message:
-        "This verification link is incomplete or incorrectly formatted. Please scan the QR code on the invoice again.",
+        "This verification link is incomplete or incorrectly formatted. Please scan the QR code on the receipt again.",
       signature: typeof token === "string" ? token : undefined,
     });
   }
@@ -194,21 +194,21 @@ app.get("/verify", (req, res) => {
 
   if (!tokenPayload) {
     return res.status(400).render(`invalid-verification.${viewExt}`, {
-      title: "Invoice verification failed",
+      title: "Receipt verification failed",
       message:
-        "This invoice ID or its verification signature has been tampered with or modified. Do not rely on this invoice until its authenticity is confirmed.",
+        "This receipt ID or its verification signature has been tampered with or modified. Do not rely on this receipt until its authenticity is confirmed.",
       signature: token,
     });
   }
 
   console.log("Verified signature")
 
-  return res.render("invoice", data);
+  return res.render("receipt", data);
 });
 
 /* app.get("/pdf", async (req, res) => {
   try {
-    const html = await ejs.renderFile("./views/invoice.ejs", data);
+    const html = await ejs.renderFile("./views/receipt.ejs", data);
 
     const browser = await puppeteer.launch({
       headless: true,
@@ -227,7 +227,7 @@ app.get("/verify", (req, res) => {
 
     res.set({
       "Content-Type": "application/pdf",
-      "Content-Disposition": 'attachment; filename="invoice.pdf"',
+      "Content-Disposition": 'attachment; filename="receipt.pdf"',
     });
     res.send(pdfBuffer);
   } catch (err) {
@@ -237,20 +237,20 @@ app.get("/verify", (req, res) => {
 }); */
 
 /* app.get("/pdfone", async (req, res) => {
-  const html = await ejs.renderFile("./views/invoice.ejs", data);
+  const html = await ejs.renderFile("./views/receipt.ejs", data);
 
   res.set("Content-Type", "application/pdf");
   wkhtmltopdf(html).pipe(res);
 });  */
 
 /* app.get("/pdftwo", async (req, res) => {
-  const html = await ejs.renderFile("./views/invoice.ejs", data);
+  const html = await ejs.renderFile("./views/receipt.ejs", data);
   const file = { content: html };
   const pdfBuffer = await htmlPdf.generatePdf(file, { format: "A4" });
 
   res.set({
     "Content-Type": "application/pdf",
-    "Content-Disposition": 'attachment; filename="invoice.pdf"',
+    "Content-Disposition": 'attachment; filename="receipt.pdf"',
   });
   res.send(pdfBuffer);
 }); */

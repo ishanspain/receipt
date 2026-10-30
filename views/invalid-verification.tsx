@@ -69,7 +69,7 @@ const styles: Record<string, React.CSSProperties> = {
     fontSize: 16,
     lineHeight: 1.65,
   },
-  invoice: {
+  receipt: {
     margin: "24px auto 0",
     padding: "13px 16px",
     background: "#fffaf0",
@@ -79,7 +79,7 @@ const styles: Record<string, React.CSSProperties> = {
     fontSize: 14,
     overflowWrap: "anywhere",
   },
-  invoiceLabel: {
+  receiptLabel: {
     color: "#697983",
     marginRight: 7,
   },
@@ -135,8 +135,8 @@ export default function InvalidVerification({
             <p style={styles.message}>{message}</p>
 
             {signature ? (
-              <div style={styles.invoice}>
-                <span style={styles.invoiceLabel}>Signature:</span>
+              <div style={styles.receipt}>
+                <span style={styles.receiptLabel}>Signature:</span>
                 <strong>{signature}</strong>
               </div>
             ) : null}

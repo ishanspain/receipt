@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Invoice <%= invoiceNumber %></title>
+<title>Receipt <%= receiptNumber %></title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -21,13 +21,13 @@
   }
   .company h1 { font-size: 20px; color: #246bce; text-transform: uppercase;}
   .company p { color: #555; line-height: 1.5; margin-top: 4px; }
-  .invoice-title { text-align: right; }
-  .invoice-title h2 {
+  .receipt-title { text-align: right; }
+  .receipt-title h2 {
     font-size: 28px;
     color: #1f2937;
     letter-spacing: 1px;
   }
-  .invoice-title p { margin-top: 6px; color: #555; }
+  .receipt-title p { margin-top: 6px; color: #555; }
   .meta-row {
     display: flex;
     justify-content: space-between;
@@ -115,9 +115,9 @@
         <% if (company.phone) { %>Phone: <%= company.phone %><% } %>
       </p>
     </div>
-    <div class="invoice-title">
-      <h2>INVOICE</h2>
-      <p>#<%= invoiceNumber %></p>
+    <div class="receipt-title">
+      <h2>RECEIPT</h2>
+      <p>#<%= receiptNumber %></p>
       <span class="status <%= status.toLowerCase() %>"><%= status %></span>
     </div>
   </div>
@@ -133,7 +133,7 @@
       </p>
     </div>
     <div class="meta-block">
-      <h3>Invoice Details</h3>
+      <h3>Receipt Details</h3>
       <p>
         Issue Date: <%= issueDate %><br>
         Due Date: <%= dueDate %><br>

@@ -5,15 +5,15 @@ import { createJwtToken } from "./jwt.js";
 import { createCustomJwt } from "./customJwt.js";
 
 const port = process.env.PORT ?? "55555";
-const invoiceID = "INV-123";
+const receiptID = "REC-123";
 
-const signedInvoice = createSignature(invoiceID);
+const signedReceipt = createSignature(receiptID);
 
 const data = {
-  invoiceID,
+  receiptID,
 };
 
-// const verificationUrl = `http://${lanIpAddress}:${port}/verify/${invoiceID}`;
+// const verificationUrl = `http://${lanIpAddress}:${port}/verify/${receiptID}`;
 
 const base64Payload = createJwtToken(data);
 const verificationUrl = `http://${lanIpAddress}:${port}/verify?token=${base64Payload}`;
