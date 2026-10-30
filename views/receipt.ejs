@@ -269,9 +269,6 @@
     font-weight: 700;
     padding: 11px 8px;
   }
-  .total-row .payment-mode {
-    text-align: left;
-  }
   .pricing-summary-row td {
     background: #fffaf0;
     border-bottom: 0;
@@ -452,7 +449,7 @@
       <% } %>
       <tr class="total-row">
         <td>TOTAL</td>
-        <td class="payment-mode"><%= paymentModeText ? `${paymentModeText} (mode of payment)` : "Mode of payment" %></td>
+        <td></td>
         <td class="number"><%= amount(totalUnitAmount) %></td>
         <td class="number"><%= totalQuantity %></td>
         <td class="number"><%= amount(totalDiscountAmount) %></td>
@@ -494,6 +491,11 @@
       <tr class="total-words-row">
         <td colspan="7"><span class="total-words-label">Amount in words:</span> <%= rupeesInWords(totalPayableAmount) %></td>
       </tr>
+      <% if (paymentModeText) { %>
+        <tr class="total-words-row">
+          <td colspan="7"><span class="total-words-label">Payment Method:</span> <%= paymentModeText %></td>
+        </tr>
+      <% } %>
     </tbody>
   </table>
 
