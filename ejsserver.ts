@@ -19,10 +19,6 @@ const printCampusLogoDataUri = `data:image/jpeg;base64,${readFileSync(
   join(__dirname, "assets", "brand", "printcampus-logo-w.jpeg"),
   "base64",
 )}`;
-const printCampusSignatureDataUri = `data:image/jpeg;base64,${readFileSync(
-  join(__dirname, "assets", "brand", "pc-sign.jpg"),
-  "base64",
-)}`;
 
 const viewsDirectory = join(__dirname, "views");
 const reactViewEngine = reactViews({ viewsDirectory });
@@ -42,7 +38,6 @@ const data = {
   orderStatus: "RECEIVED",
   currency: "₹",
   qrCodeDataUrl,
-  signatureDataUri: printCampusSignatureDataUri,
   sellerInfo: {
     brandName: "PrintCampus",
     logoDataUri: printCampusLogoDataUri,

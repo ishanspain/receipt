@@ -1,5 +1,7 @@
 # Read this
 
+> main receipt templete = `views/receipt.ejs`
+
 ## template
 > views folder incldues the main template
 - assest  includes the imgs uses as base64 in pdf file
@@ -7,7 +9,7 @@
 
 ## express server
 > Shown the example, how use this template
-- start the ejsserver to view the ejs template preview on this path = /
+- start the ejsserver `ejsserver.ts` to view the ejs template preview on this path = /
 
 ## QRcode
 > the qrcode should contain the full url to verify the receipt with the param as digitally signed(using hashing algo)
