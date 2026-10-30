@@ -474,13 +474,10 @@
               <span><%= amount(totalUnitAmount) %></span>
             </div>
             <div class="pricing-summary-line">
-              <span>Add-ons Subtotal:</span>
-              <span><%= amount(receiptAddonsSubtotal) %></span>
-            </div>
-            <div class="pricing-summary-line">
               <span>Delivery Fee:</span>
               <span><%= amount(receiptDeliveryFee) %></span>
             </div>
+            <!-- Temporarily hide platform fee, discount and tax summary rows.
             <div class="pricing-summary-line">
               <span>Platform Fee:</span>
               <span><%= amount(receiptPlatformFee) %></span>
@@ -493,6 +490,7 @@
               <span>Tax (18% IGST):</span>
               <span><%= amount(totalTaxValue) %></span>
             </div>
+            -->
             <div class="pricing-summary-line pricing-summary-total">
               <span>Grand Total:</span>
               <span><%= amount(totalPayableAmount) %></span>
